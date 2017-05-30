@@ -1,8 +1,8 @@
 package main
 
 import (
-	"fmt"
 	"image/color"
+	"strconv"
 
 	"github.com/200sc/go-dist/floatrange"
 
@@ -19,6 +19,14 @@ var (
 	limit      = floatrange.NewLinear(0, 255)
 )
 
+type floatStringer struct {
+	f *float64
+}
+
+func (fs floatStringer) String() string {
+	return strconv.Itoa(int(*fs.f))
+}
+
 func main() {
 	oak.AddScene("demo",
 		// Init
@@ -32,15 +40,23 @@ func main() {
 			}
 			r = 255
 			font = fg.Generate()
-			txt := font.NewStrText("Rainbow", 200, 200)
-			render.Draw(txt, 0)
+			render.Draw(font.NewStrText("Rainbow", 200, 200), 0)
+			render.Draw(font.NewText(floatStringer{&r}, 200, 250), 0)
+			render.Draw(font.NewText(floatStringer{&g}, 320, 250), 0)
+			render.Draw(font.NewText(floatStringer{&b}, 440, 250), 0)
+			font2 := font.Copy()
+			font2.Color = image.NewUniform(color.RGBA{255, 255, 255, 255})
+			font2.Refresh()
+			// Could give each r,g,b a color which is just the r,g,b value
+			render.Draw(font2.NewStrText("r", 170, 250), 0)
+			render.Draw(font2.NewStrText("g", 290, 250), 0)
+			render.Draw(font2.NewStrText("b", 410, 250), 0)
 		},
 		// Loop
 		func() bool {
 			r = limit.EnforceRange(r + diff.Poll())
 			g = limit.EnforceRange(g + diff.Poll())
 			b = limit.EnforceRange(b + diff.Poll())
-			fmt.Println(uint8(r), uint8(g), uint8(b))
 			// This should be a function in oak to just set color source
 			// (or texture source)
 			font.Drawer.Src = image.NewUniform(
