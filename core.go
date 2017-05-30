@@ -62,8 +62,8 @@ func main() {
 			font.Drawer.Src = image.NewUniform(
 				color.RGBA{
 					uint8(r),
-					uint8(b),
 					uint8(g),
+					uint8(b),
 					255,
 				},
 			)
