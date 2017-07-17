@@ -9,7 +9,7 @@ import (
 	"image"
 
 	"bitbucket.org/oakmoundstudio/oak"
-	"bitbucket.org/oakmoundstudio/oak/render"
+	"github.com/oakmound/oak/render"
 )
 
 var (
