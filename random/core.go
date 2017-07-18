@@ -8,7 +8,7 @@ import (
 
 	"image"
 
-	"bitbucket.org/oakmoundstudio/oak"
+	"github.com/oakmound/oak"
 	"github.com/oakmound/oak/render"
 )
 
